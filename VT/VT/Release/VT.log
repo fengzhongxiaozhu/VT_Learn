@@ -1,0 +1,11 @@
+﻿  Building 'VT' with toolset 'WindowsKernelModeDriver10.0' and the 'Desktop' target platform.
+  entry.c
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(15,4): error C2220: the following warning is treated as an error
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(15,4): warning C4201: nonstandard extension used: nameless struct/union
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(16,3): warning C4201: nonstandard extension used: nameless struct/union
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(50,66): warning C4100: 'Context': unreferenced formal parameter
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(50,38): warning C4100: 'DeviceObj': unreferenced formal parameter
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(53,8): warning C4189: 'keyflag': local variable is initialized but not referenced
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(54,20): warning C4189: 'keys': local variable is initialized but not referenced
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(113,67): warning C4100: 'RegetryPath': unreferenced formal parameter
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(115,17): warning C4189: 'test': local variable is initialized but not referenced
