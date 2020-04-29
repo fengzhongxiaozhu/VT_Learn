@@ -1,0 +1,240 @@
+﻿  Building 'VT' with toolset 'WindowsKernelModeDriver10.0' and the 'Desktop' target platform.
+  entry.c
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(4,34): error C2220: the following warning is treated as an error
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(4,34): warning C4100: 'driver': unreferenced formal parameter
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(12,17): error C2485: 'naked': unrecognized extended attribute
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(14,5): error C4235: nonstandard extension used: '__asm' keyword not supported on this architecture
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(15,13): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(15,13): error C2146: syntax error: missing ';' before identifier 'esp'
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(15,16): error C2065: 'esp': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(16,9): error C2146: syntax error: missing ';' before identifier 'jmp'
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(16,13): error C2065: 'jmp': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(16,13): error C2146: syntax error: missing ';' before identifier 'back_position'
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(17,5): error C2143: syntax error: missing ';' before '}'
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(31,5): error C4235: nonstandard extension used: '__asm' keyword not supported on this architecture
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(34,9): error C2065: 'pushad': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(34,9): error C2146: syntax error: missing ';' before identifier 'pushfd'
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(35,9): error C2065: 'pushfd': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(35,9): error C2146: syntax error: missing ';' before identifier 'mov'
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(35,13): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(35,13): error C2146: syntax error: missing ';' before identifier 'g_exit_esp'
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(36,9): error C2065: 'esp': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(36,9): error C2146: syntax error: missing ';' before identifier 'mov'
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(36,13): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(36,13): error C2146: syntax error: missing ';' before identifier 'back_position'
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(36,35): error C2065: 'offset': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(36,35): error C2146: syntax error: missing ';' before identifier 'RETPOSITION'
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(37,5): error C2065: 'RETPOSITION': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(37,5): error C2143: syntax error: missing ';' before '}'
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(42,5): error C4235: nonstandard extension used: '__asm' keyword not supported on this architecture
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(44,9): error C2065: 'popfd': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(44,9): error C2146: syntax error: missing ';' before identifier 'popad'
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(45,5): error C2065: 'popad': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\entry.c(45,5): error C2143: syntax error: missing ';' before '}'
+  exithandler.c
+E:\Vs\Learning\VT_Learn\MinimalVT\vtasm.h(29,3): error C2220: the following warning is treated as an error
+E:\Vs\Learning\VT_Learn\MinimalVT\vtasm.h(29,3): warning C4201: nonstandard extension used: nameless struct/union
+E:\Vs\Learning\VT_Learn\MinimalVT\vtasm.h(52,3): warning C4201: nonstandard extension used: nameless struct/union
+E:\Vs\Learning\VT_Learn\MinimalVT\vtasm.h(82,3): warning C4201: nonstandard extension used: nameless struct/union
+E:\Vs\Learning\VT_Learn\MinimalVT\vtasm.h(100,3): warning C4201: nonstandard extension used: nameless struct/union
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(29,9): error C4235: nonstandard extension used: '__asm' keyword not supported on this architecture
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(30,17): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(30,17): error C2146: syntax error: missing ';' before identifier 'esp'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(30,20): error C2065: 'esp': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(31,13): error C2146: syntax error: missing ';' before identifier 'jmp'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(31,17): error C2065: 'jmp': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(31,17): error C2146: syntax error: missing ';' before identifier 'g_stop_eip'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(32,9): error C2143: syntax error: missing ';' before '}'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(34,9): error C4235: nonstandard extension used: '__asm' keyword not supported on this architecture
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(34,19): error C2143: syntax error: missing ';' before 'constant'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(34,19): warning C4091: ' ': ignored on left of 'int' when no variable is declared
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(35,5): error C2143: syntax error: missing ';' before '}'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(55,9): error C4235: nonstandard extension used: '__asm' keyword not supported on this architecture
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(55,19): error C2143: syntax error: missing ';' before 'constant'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(55,19): warning C4091: ' ': ignored on left of 'int' when no variable is declared
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(56,5): error C2143: syntax error: missing ';' before '}'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(59,62): warning C4311: 'type cast': pointer truncation from 'GUEST_REGS *' to 'ULONG'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(61,39): warning C4311: 'type cast': pointer truncation from 'GUEST_REGS *' to 'ULONG'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(97,9): error C4235: nonstandard extension used: '__asm' keyword not supported on this architecture
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(97,19): error C2143: syntax error: missing ';' before 'constant'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(97,19): warning C4091: ' ': ignored on left of 'int' when no variable is declared
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(98,5): error C2143: syntax error: missing ';' before '}'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(108,17): error C2485: 'naked': unrecognized extended attribute
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(110,5): error C4235: nonstandard extension used: '__asm' keyword not supported on this architecture
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(111,13): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(111,13): error C2146: syntax error: missing ';' before identifier 'g_GuestRegs'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(112,9): error C2065: 'eax': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(112,9): error C2146: syntax error: missing ';' before identifier 'mov'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(112,13): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(112,13): error C2146: syntax error: missing ';' before identifier 'g_GuestRegs'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(113,9): error C2065: 'ecx': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(113,9): error C2146: syntax error: missing ';' before identifier 'mov'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(113,13): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(113,13): error C2146: syntax error: missing ';' before identifier 'g_GuestRegs'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(114,9): error C2065: 'edx': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(114,9): error C2146: syntax error: missing ';' before identifier 'mov'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(114,13): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(114,13): error C2146: syntax error: missing ';' before identifier 'g_GuestRegs'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(115,9): error C2065: 'ebx': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(115,9): error C2146: syntax error: missing ';' before identifier 'mov'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(115,13): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(115,13): error C2146: syntax error: missing ';' before identifier 'g_GuestRegs'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(116,9): error C2065: 'esp': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(116,9): error C2146: syntax error: missing ';' before identifier 'mov'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(116,13): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(116,13): error C2146: syntax error: missing ';' before identifier 'g_GuestRegs'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(117,9): error C2065: 'ebp': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(117,9): error C2146: syntax error: missing ';' before identifier 'mov'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(117,13): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(117,13): error C2146: syntax error: missing ';' before identifier 'g_GuestRegs'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(118,9): error C2065: 'esi': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(118,9): error C2146: syntax error: missing ';' before identifier 'mov'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(118,13): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(118,13): error C2146: syntax error: missing ';' before identifier 'g_GuestRegs'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(120,9): error C2065: 'edi': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(120,9): error C2146: syntax error: missing ';' before identifier 'pushfd'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(121,9): error C2065: 'pushfd': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(121,9): error C2146: syntax error: missing ';' before identifier 'pop'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(121,13): error C2065: 'pop': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(121,13): error C2146: syntax error: missing ';' before identifier 'eax'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(122,9): error C2065: 'eax': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(122,9): error C2146: syntax error: missing ';' before identifier 'mov'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(122,13): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(122,13): error C2146: syntax error: missing ';' before identifier 'g_GuestRegs'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(124,9): error C2065: 'eax': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(124,9): error C2146: syntax error: missing ';' before identifier 'mov'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(124,13): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(124,13): error C2146: syntax error: missing ';' before identifier 'ax'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(124,15): error C2065: 'ax': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(125,9): error C2065: 'fs': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(125,9): error C2146: syntax error: missing ';' before identifier 'mov'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(125,13): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(125,13): error C2146: syntax error: missing ';' before identifier 'fs'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(125,15): error C2065: 'fs': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(126,9): error C2065: 'ax': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(126,9): error C2146: syntax error: missing ';' before identifier 'mov'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(126,13): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(126,13): error C2146: syntax error: missing ';' before identifier 'ax'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(126,15): error C2065: 'ax': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(127,9): error C2065: 'gs': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(127,9): error C2146: syntax error: missing ';' before identifier 'mov'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(127,13): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(127,13): error C2146: syntax error: missing ';' before identifier 'gs'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(127,15): error C2065: 'gs': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(128,5): error C2065: 'ax': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(128,5): error C2143: syntax error: missing ';' before '}'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(130,5): error C4235: nonstandard extension used: '__asm' keyword not supported on this architecture
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(131,14): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(131,14): error C2146: syntax error: missing ';' before identifier 'eax'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(131,17): error C2065: 'eax': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(132,9): error C2146: syntax error: missing ';' before identifier 'mov'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(132,14): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(132,14): error C2146: syntax error: missing ';' before identifier 'ecx'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(132,17): error C2065: 'ecx': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(133,9): error C2146: syntax error: missing ';' before identifier 'mov'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(133,14): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(133,14): error C2146: syntax error: missing ';' before identifier 'edx'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(133,17): error C2065: 'edx': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(134,9): error C2146: syntax error: missing ';' before identifier 'mov'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(134,14): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(134,14): error C2146: syntax error: missing ';' before identifier 'ebx'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(134,17): error C2065: 'ebx': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(135,9): error C2146: syntax error: missing ';' before identifier 'mov'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(135,14): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(135,14): error C2146: syntax error: missing ';' before identifier 'esp'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(135,17): error C2065: 'esp': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(136,9): error C2146: syntax error: missing ';' before identifier 'mov'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(136,14): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(136,14): error C2146: syntax error: missing ';' before identifier 'ebp'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(136,17): error C2065: 'ebp': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(137,9): error C2146: syntax error: missing ';' before identifier 'mov'
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(137,14): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\exithandler.c(137,14): fatal error C1003: error count exceeds 100; stopping compilation
+  vtsystem.c
+E:\Vs\Learning\VT_Learn\MinimalVT\vtasm.h(29,3): error C2220: the following warning is treated as an error
+E:\Vs\Learning\VT_Learn\MinimalVT\vtasm.h(29,3): warning C4201: nonstandard extension used: nameless struct/union
+E:\Vs\Learning\VT_Learn\MinimalVT\vtasm.h(52,3): warning C4201: nonstandard extension used: nameless struct/union
+E:\Vs\Learning\VT_Learn\MinimalVT\vtasm.h(82,3): warning C4201: nonstandard extension used: nameless struct/union
+E:\Vs\Learning\VT_Learn\MinimalVT\vtasm.h(100,3): warning C4201: nonstandard extension used: nameless struct/union
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(90,17): error C2485: 'naked': unrecognized extended attribute
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(92,5): error C4235: nonstandard extension used: '__asm' keyword not supported on this architecture
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(93,13): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(93,13): error C2146: syntax error: missing ';' before identifier 'ax'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(93,15): error C2065: 'ax': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(94,9): error C2065: 'es': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(94,9): error C2146: syntax error: missing ';' before identifier 'mov'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(94,13): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(94,13): error C2146: syntax error: missing ';' before identifier 'es'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(94,15): error C2065: 'es': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(96,9): error C2065: 'ax': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(96,9): error C2146: syntax error: missing ';' before identifier 'mov'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(96,13): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(96,13): error C2146: syntax error: missing ';' before identifier 'ax'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(96,15): error C2065: 'ax': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(97,9): error C2065: 'ds': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(97,9): error C2146: syntax error: missing ';' before identifier 'mov'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(97,13): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(97,13): error C2146: syntax error: missing ';' before identifier 'ds'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(97,15): error C2065: 'ds': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(99,9): error C2065: 'ax': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(99,9): error C2146: syntax error: missing ';' before identifier 'mov'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(99,13): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(99,13): error C2146: syntax error: missing ';' before identifier 'ax'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(99,15): error C2065: 'ax': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(100,9): error C2065: 'fs': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(100,9): error C2146: syntax error: missing ';' before identifier 'mov'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(100,13): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(100,13): error C2146: syntax error: missing ';' before identifier 'fs'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(100,15): error C2065: 'fs': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(102,9): error C2065: 'ax': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(102,9): error C2146: syntax error: missing ';' before identifier 'mov'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(102,13): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(102,13): error C2146: syntax error: missing ';' before identifier 'ax'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(102,15): error C2065: 'ax': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(103,9): error C2065: 'gs': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(103,9): error C2146: syntax error: missing ';' before identifier 'mov'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(103,13): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(103,13): error C2146: syntax error: missing ';' before identifier 'gs'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(103,15): error C2065: 'gs': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(105,9): error C2065: 'ax': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(105,9): error C2146: syntax error: missing ';' before identifier 'mov'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(105,13): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(105,13): error C2146: syntax error: missing ';' before identifier 'ax'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(105,15): error C2065: 'ax': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(106,9): error C2065: 'ss': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(106,9): error C2146: syntax error: missing ';' before identifier 'mov'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(106,13): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(106,13): error C2146: syntax error: missing ';' before identifier 'ss'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(106,15): error C2065: 'ss': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(107,5): error C2065: 'ax': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(107,5): error C2143: syntax error: missing ';' before '}'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(109,5): error C4235: nonstandard extension used: '__asm' keyword not supported on this architecture
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(110,13): error C2065: 'jmp': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(110,13): error C2146: syntax error: missing ';' before identifier 'g_exit'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(111,5): error C2143: syntax error: missing ';' before '}'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(110,13): warning C4550: expression evaluates to a function which is missing an argument list
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(188,52): warning C4311: 'type cast': pointer truncation from 'PVOID' to 'ULONG'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(189,46): warning C4311: 'type cast': pointer truncation from 'void (__cdecl *)()' to 'ULONG'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(218,52): warning C4311: 'type cast': pointer truncation from 'PVOID' to 'ULONG'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(219,49): warning C4311: 'type cast': pointer truncation from 'void (__cdecl *)(void)' to 'ULONG'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(282,9): error C4235: nonstandard extension used: '__asm' keyword not supported on this architecture
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(284,13): error C2065: 'pushad': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(284,13): error C2146: syntax error: missing ';' before identifier 'pushfd'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(285,13): error C2065: 'pushfd': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(285,13): error C2146: syntax error: missing ';' before identifier 'mov'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(285,17): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(285,17): error C2146: syntax error: missing ';' before identifier 'g_stop_esp'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(286,13): error C2065: 'esp': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(286,13): error C2146: syntax error: missing ';' before identifier 'mov'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(286,17): error C2065: 'mov': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(286,17): error C2146: syntax error: missing ';' before identifier 'g_stop_eip'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(286,36): error C2065: 'offset': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(286,36): error C2146: syntax error: missing ';' before identifier 'LLL'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(287,9): error C2065: 'LLL': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(287,9): error C2143: syntax error: missing ';' before '}'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(290,9): error C4235: nonstandard extension used: '__asm' keyword not supported on this architecture
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(292,13): error C2065: 'popfd': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(292,13): error C2146: syntax error: missing ';' before identifier 'popad'
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(293,9): error C2065: 'popad': undeclared identifier
+E:\Vs\Learning\VT_Learn\MinimalVT\vtsystem.c(293,9): error C2143: syntax error: missing ';' before '}'
+  Generating Code...
