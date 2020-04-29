@@ -10,8 +10,8 @@ NTSTATUS AllocateVMXRegion()
     PVOID pVMCSRegion;
     PVOID pStack;
 
-    pVMXONRegion = ExAllocatePoolWithTag(NonPagedPool,0x1000,'vmon'); //4KB
-    if (!pVMXONRegion)
+    pVMXONRegion = ExAllocatePoolWithTag(NonPagedPool,0x1000,'vmon'); //4KB // 申请内存 存放 VMX 信息
+    if (!pVMXONRegion)  
     {
         Log("ERROR:申请VMXON内存区域失败!",0);
         return STATUS_MEMORY_NOT_ALLOCATED;
@@ -42,7 +42,7 @@ NTSTATUS AllocateVMXRegion()
     Log("TIP:宿主机堆载区域地址",pStack);
 
     g_VMXCPU.pVMXONRegion = pVMXONRegion;
-    g_VMXCPU.pVMXONRegion_PA = MmGetPhysicalAddress(pVMXONRegion);
+    g_VMXCPU.pVMXONRegion_PA = MmGetPhysicalAddress(pVMXONRegion); // 需要的是物理地址
     g_VMXCPU.pVMCSRegion = pVMCSRegion;
     g_VMXCPU.pVMCSRegion_PA = MmGetPhysicalAddress(pVMCSRegion);
     g_VMXCPU.pStack = pStack;
@@ -59,23 +59,23 @@ void SetupVMXRegion()
 
     RtlZeroMemory(&Msr,sizeof(Msr));
 
-    *((PULONG)&Msr) = (ULONG)Asm_ReadMsr(MSR_IA32_VMX_BASIC);
+    *((PULONG)&Msr) = (ULONG)Asm_ReadMsr(MSR_IA32_VMX_BASIC); // MSR[480H]
     uRevId = Msr.RevId;
 
-    *((PULONG)g_VMXCPU.pVMXONRegion) = uRevId;
+    *((PULONG)g_VMXCPU.pVMXONRegion) = uRevId; // 设置版本号信息.不然无法vmoff
     *((PULONG)g_VMXCPU.pVMCSRegion) = uRevId;
 
     Log("TIP:VMX版本号信息",uRevId);
 
     *((PULONG)&uCr4) = Asm_GetCr4();
-    uCr4.VMXE = 1;
+    uCr4.VMXE = 1;  // 锁,VMXOn之后不能清零,不然保护异常
     Asm_SetCr4(*((PULONG)&uCr4));
 
 
     Vmx_VmxOn(g_VMXCPU.pVMXONRegion_PA.LowPart, g_VMXCPU.pVMXONRegion_PA.HighPart);
     *((PULONG)&uEflags) = Asm_GetEflags();
 
-    if (uEflags.CF != 0)
+    if (uEflags.CF != 0)    // 开启VT之后 CF位会==1
     {
         Log("ERROR:VMXON指令调用失败!",0);
         return;
@@ -107,7 +107,7 @@ void __declspec(naked) GuestEntry()
     }
 
     __asm{
-        jmp g_exit
+        //jmp g_exit
     }
 }
 

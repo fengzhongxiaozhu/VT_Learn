@@ -22,28 +22,32 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\MinimalVT\entry.c">
-      <Filter>Driver Files</Filter>
+    <ClCompile Include="..\MinimalVT\entry.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MinimalVT\exithandler.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\MinimalVT\vtsystem.c">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\MinimalVT\exithandler.h">
-      <Filter>Driver Files</Filter>
+    <ClInclude Include="..\MinimalVT\exithandler.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\MinimalVT\vtasm.h">
-      <Filter>Driver Files</Filter>
+    <ClInclude Include="..\MinimalVT\vtasm.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\MinimalVT\vtsystem.h">
-      <Filter>Driver Files</Filter>
+    <ClInclude Include="..\MinimalVT\vtsystem.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\MinimalVT\SOURCES">
-      <Filter>Driver Files</Filter>
-    </None>
+    <None Include="..\MinimalVT\SOURCES" />
   </ItemGroup>
   <ItemGroup>
-    <MASM Include="..\..\MinimalVT\i386\vtasm.asm">
+    <MASM Include="..\MinimalVT\i386\vtasm.asm">
       <Filter>Driver Files\i386</Filter>
     </MASM>
   </ItemGroup>

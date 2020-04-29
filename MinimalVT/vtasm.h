@@ -11,20 +11,20 @@ typedef union
 {
 	struct
 	{
-		unsigned PE:1;
-		unsigned MP:1;
-		unsigned EM:1;
-		unsigned TS:1;
-		unsigned ET:1;
-		unsigned NE:1;
-		unsigned Reserved_1:10;
-		unsigned WP:1;
-		unsigned Reserved_2:1;
-		unsigned AM:1;
-		unsigned Reserved_3:10;
-		unsigned NW:1;
-		unsigned CD:1;
-		unsigned PG:1;
+		unsigned PE:1;			 // 段保护开启
+		unsigned MP:1;			 // 
+		unsigned EM:1;			 // 
+		unsigned TS:1;			 // 
+		unsigned ET:1;			 // 
+		unsigned NE:1;			 // VT软件中开启位
+		unsigned Reserved_1:10;	 // 
+		unsigned WP:1;			 // 
+		unsigned Reserved_2:1;	 // 
+		unsigned AM:1;			 // 
+		unsigned Reserved_3:10;	 // 
+		unsigned NW:1;			 // 
+		unsigned CD:1;			 // 
+		unsigned PG:1;			 // 页保护开启
 		//unsigned Reserved_64:32;
 	};
 

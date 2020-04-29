@@ -87,7 +87,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <AssemblerOutput>AssemblyAndSourceCode</AssemblerOutput>
     </ClCompile>
   </ItemDefinitionGroup>
@@ -103,18 +103,22 @@
     <FilesToPackage Include="$(TargetPath)" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\MinimalVT\entry.c" />
+    <ClCompile Include="..\MinimalVT\entry.c" />
+    <ClCompile Include="..\MinimalVT\exithandler.c" />
+    <ClCompile Include="..\MinimalVT\vtsystem.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\MinimalVT\exithandler.h" />
-    <ClInclude Include="..\..\MinimalVT\vtasm.h" />
-    <ClInclude Include="..\..\MinimalVT\vtsystem.h" />
+    <ClInclude Include="..\MinimalVT\exithandler.h" />
+    <ClInclude Include="..\MinimalVT\vtasm.h" />
+    <ClInclude Include="..\MinimalVT\vtsystem.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\MinimalVT\SOURCES" />
+    <None Include="..\MinimalVT\SOURCES" />
   </ItemGroup>
   <ItemGroup>
-    <MASM Include="..\..\MinimalVT\i386\vtasm.asm" />
+    <MASM Include="..\MinimalVT\i386\vtasm.asm">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </MASM>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
