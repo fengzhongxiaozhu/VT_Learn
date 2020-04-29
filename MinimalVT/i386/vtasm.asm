@@ -6,6 +6,8 @@ option casemap:none
 
 .code
 
+
+
 Asm_CPUID	Proc	uses ebx esi edi fn:dword, ret_eax:dword, ret_ebx:dword, ret_ecx:dword, ret_edx:dword
         mov	eax, fn
         cpuid

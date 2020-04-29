@@ -314,19 +314,26 @@ BOOLEAN IsVTEnabled()
     _CR0        uCr0;
     _CR4    uCr4;
     IA32_FEATURE_CONTROL_MSR msr;
-    //1. CPUID
-    Asm_CPUID(1, &uRet_EAX, &uRet_EBX, &uRet_ECX, &uRet_EDX);
+    //1. CPUID          //23.6 DISCOVERING SUPPORT FOR VMX  // Cpu 是否支持 vt 功能
+    Asm_CPUID(1, &uRet_EAX, &uRet_EBX, &uRet_ECX, &uRet_EDX);   // mov eax,1  &&  cpuid    
     *((PULONG)&uCPUID) = uRet_ECX;
 
-    if (uCPUID.VMX != 1)
+    if (uCPUID.VMX != 1)  // CPUID.1:   ECX.VMX[bit 5] == 1
     {
         Log("ERROR: 这个CPU不支持VT!",0);
         return FALSE;
     }
 
+	// 3. MSR             // 23.7 ENABLING AND ENTERING VMX OPERATION
+	*((PULONG)&msr) = (ULONG)Asm_ReadMsr(MSR_IA32_FEATURE_CONTROL);  // MSR[3AH]
+	if (msr.Lock != 1) {  // 主板 vt 功能是否开启
+		Log("ERROR:VT指令未被锁定!", 0);
+		return FALSE;
+	}
+
     // 2. CR0 CR4
     *((PULONG)&uCr0) = Asm_GetCr0();
-    *((PULONG)&uCr4) = Asm_GetCr4();
+    *((PULONG)&uCr4) = Asm_GetCr4();    // 软件可以控制开启vt..你如果进入vt必须设置这个位 // pe 段保护模式要开启 pg 页保护模式要开启
 
     if (uCr0.PE != 1 || uCr0.PG!=1 || uCr0.NE!=1)
     {
@@ -337,17 +344,11 @@ BOOLEAN IsVTEnabled()
     if (uCr4.VMXE == 1)
     {
         Log("ERROR:这个CPU已经开启了VT!",0);
-        Log("可能是别的驱动已经占用了VT，你必须关闭它后才能开启。",0);
+        Log("可能是别的驱动已经占用了VT，你必须关闭它后才能开启。",0);   // 刚开始框架简单一点 ..不重入了
         return FALSE;
     }
 
-    // 3. MSR
-    *((PULONG)&msr) = (ULONG)Asm_ReadMsr(MSR_IA32_FEATURE_CONTROL);
-    if (msr.Lock!=1)
-    {
-        Log("ERROR:VT指令未被锁定!",0);
-        return FALSE;
-    }
+
     Log("SUCCESS:这个CPU支持VT!",0);
     return TRUE;
 }
