@@ -1,3 +1,4 @@
+ï»¿// ä¸­æ–‡
 #ifndef VTSYSTEM_H
 #define VTSYSTEM_H
 #include <ntddk.h>
@@ -312,11 +313,11 @@ typedef struct _VMX_CPU
 
 extern VMX_CPU g_VMXCPU;
 
-//¼ì²éµ±Ç°´¦ÀíÆ÷ÊÇ·ñÖ§³ÖVT
+//æ£€æŸ¥å½“å‰å¤„ç†å™¨æ˜¯å¦æ”¯æŒVT
 BOOLEAN IsVTEnabled();
-//¿ªÆôVT
+//å¼€å¯VT
 NTSTATUS StartVirtualTechnology();
-//¹Ø±ÕVT
+//å…³é—­VT
 NTSTATUS StopVirtualTechnology();
 
 #define Log(message,value) {{KdPrint(("[MinVT] %-40s [%p]\n",message,value));}}

@@ -1,3 +1,4 @@
+﻿// 中文
 #include "exithandler.h"
 #include "vtsystem.h"
 #include "vtasm.h"

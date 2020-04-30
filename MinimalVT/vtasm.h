@@ -1,3 +1,4 @@
+ï»¿// ä¸­æ–‡
 #ifndef VTASM_H
 #define VTASM_H
 
@@ -11,12 +12,12 @@ typedef union
 {
 	struct
 	{
-		unsigned PE:1;			 // ¶Î±£»¤¿ªÆô
+		unsigned PE:1;			 // æ®µä¿æŠ¤å¼€å¯
 		unsigned MP:1;			 // 
 		unsigned EM:1;			 // 
 		unsigned TS:1;			 // 
 		unsigned ET:1;			 // 
-		unsigned NE:1;			 // VTÈí¼şÖĞ¿ªÆôÎ»
+		unsigned NE:1;			 // VTè½¯ä»¶ä¸­å¼€å¯ä½
 		unsigned Reserved_1:10;	 // 
 		unsigned WP:1;			 // 
 		unsigned Reserved_2:1;	 // 
@@ -24,7 +25,7 @@ typedef union
 		unsigned Reserved_3:10;	 // 
 		unsigned NW:1;			 // 
 		unsigned CD:1;			 // 
-		unsigned PG:1;			 // Ò³±£»¤¿ªÆô
+		unsigned PG:1;			 // é¡µä¿æŠ¤å¼€å¯
 		//unsigned Reserved_64:32;
 	};
 

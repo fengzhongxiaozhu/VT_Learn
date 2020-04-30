@@ -1,3 +1,4 @@
+﻿// 中文
 #ifndef EXITHANDLER_H
 #define EXITHANDLER_H
 

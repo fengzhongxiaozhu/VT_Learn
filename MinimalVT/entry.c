@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <ntddk.h>
 #include "vtasm.h"
@@ -9,7 +9,7 @@ VOID DriverUnload(PDRIVER_OBJECT pDriver){
     //StopVirtualTechnology();
     DbgPrint("Driver is unloading...\r\n");
 }
-
+// ä¸­æ–‡
 NTSTATUS 
   DriverEntry( 
     PDRIVER_OBJECT  pDriver,
@@ -18,31 +18,31 @@ NTSTATUS
 
     DbgPrint("Driver Entered!\r\n");
 
-    // Tips: Èç¹û¿´²»¶®»ã±àÖ¸Áî.ÄÇÃ´±àÒë³É .obj ÎÄ¼ş ..ÍÏ½øIDAÀïÃæ¿´
+    // Tips: å¦‚æœçœ‹ä¸æ‡‚æ±‡ç¼–æŒ‡ä»¤.é‚£ä¹ˆç¼–è¯‘æˆ .obj æ–‡ä»¶ ..æ‹–è¿›IDAé‡Œé¢çœ‹
     // Vmx_VmCall(); 
 
-    // Ê×ÏÈµÚÒ»¼şÊÂ¾ÍÊÇ²éÑ¯ Cpu ÊÇ·ñÖ§³Ö Vm
+    // é¦–å…ˆç¬¬ä¸€ä»¶äº‹å°±æ˜¯æŸ¥è¯¢ Cpu æ˜¯å¦æ”¯æŒ Vm
     // 23.6 DISCOVERING SUPPORT FOR VMX
     if (!IsVTEnabled()){
-        Log( ("Cpu ²»Ö§³ÖVT¹¦ÄÜ"), -1);
+        Log( ("Cpu ä¸æ”¯æŒVTåŠŸèƒ½"), -1);
         return STATUS_UNSUCCESSFUL;
     }
 
     // file:///E:\Vs\fengzhongxiaozhu\VT_Learn\VT\Source\Image\VMXON.png
     // 31.5 VMM SETUP & TEAR DOWN -> IA32_VMX_BASIC MSR (index 480H)
-    // ¿ªÆô VT »·¾³ ĞèÒª Ò»¿éÄÚ´æ.ÓÃÀ´´¢´æ VMM ĞÅÏ¢.¿Í»§»úºÍÖ÷»ú µÈµÈ
-    // Õâ¿éĞèÇóµÄÄÚ´æ´óĞ¡ºÍÆäËüĞÅÏ¢ÔÚ 
+    // å¼€å¯ VT ç¯å¢ƒ éœ€è¦ ä¸€å—å†…å­˜.ç”¨æ¥å‚¨å­˜ VMM ä¿¡æ¯.å®¢æˆ·æœºå’Œä¸»æœº ç­‰ç­‰
+    // è¿™å—éœ€æ±‚çš„å†…å­˜å¤§å°å’Œå…¶å®ƒä¿¡æ¯åœ¨ 
     // APPENDIX AVMX CAPABILITY REPORTING FACILITY -> A.1 BASIC VMX INFORMATION
     // IA32_VMX_BASIC MSR (index 480H)
     // 00d81000 00000001
-    // 30:0 °æ±¾ĞÅÏ¢
+    // 30:0 ç‰ˆæœ¬ä¿¡æ¯
     // Bit 31 is always 0.
-    // 44:32 ĞèÒªµÄÄÚ´æ´óĞ¡
+    // 44:32 éœ€è¦çš„å†…å­˜å¤§å°
     // bit 48    ?
     // bit 49    ?
     // bit 53:50 ?
     if (!StartVirtualTechnology()){
-        Log(("Cpu ¿ªÆôVTÊ§°Ü"), -1);
+        Log(("Cpu å¼€å¯VTå¤±è´¥"), -1);
         return STATUS_UNSUCCESSFUL;
     }
 
@@ -54,9 +54,7 @@ NTSTATUS
     //    mov back_position, offset RETPOSITION
     //}
 
-    //StartVirtualTechnology();       //×Ô´Ë²»¹é
+    //StartVirtualTechnology();       //è‡ªæ­¤ä¸å½’
 
 	return STATUS_SUCCESS;
 }
-
-
