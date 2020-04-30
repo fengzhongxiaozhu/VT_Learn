@@ -126,6 +126,8 @@ void __declspec(naked) VMMEntryPoint(void)
         mov fs, ax
         mov ax, gs
         mov gs, ax
+
+        int 0x3
     }
     VMMEntryPointEbd();
     __asm{
