@@ -144,101 +144,122 @@ void SetupVMCS()
     GdtBase = Asm_GetGdtBase();
     IdtBase = Asm_GetIdtBase();
 
-    ////
-    //// 1.Guest State Area
-    //// 为什么不能直接写内存而是要使用 VmWrite 呢..你想啊,段描述符这么碎,因为要兼容以前的程序.intel如果写死这块内存.那么会变得跟描述符一样.所以设计一下抽象出来.方便以后灵活更改.还有可能写某些内存会操作寄存器.
-    //// APPENDIX B    FIELD ENCODING IN VMCS
-    //Vmx_VmWrite(GUEST_CR0, Asm_GetCr0());
-    //Vmx_VmWrite(GUEST_CR3, Asm_GetCr3());
-    //Vmx_VmWrite(GUEST_CR4, Asm_GetCr4());
+    //
+    // 1.Guest State Area
+    // 为什么不能直接写内存而是要使用 VmWrite 呢..你想啊,段描述符这么碎,因为要兼容以前的程序.intel如果写死这块内存.那么会变得跟描述符一样.所以设计一下抽象出来.方便以后灵活更改.还有可能写某些内存会操作寄存器.
+    // APPENDIX B    FIELD ENCODING IN VMCS
+    // 这没有初始化那么错误代码是  30.4 VM INSTRUCTION ERROR NUMBERS -> 7 VM entry with invalid control field(s)2,3
+    Vmx_VmWrite(GUEST_CR0, Asm_GetCr0());
+    Vmx_VmWrite(GUEST_CR3, Asm_GetCr3());
+    Vmx_VmWrite(GUEST_CR4, Asm_GetCr4());
 
-    //Vmx_VmWrite(GUEST_DR7, 0x400);
-    //Vmx_VmWrite(GUEST_RFLAGS, Asm_GetEflags() & ~0x200);
+    Vmx_VmWrite(GUEST_DR7, 0x400);
+    Vmx_VmWrite(GUEST_RFLAGS, Asm_GetEflags() & ~0x200);
 
-    //Vmx_VmWrite(GUEST_ES_SELECTOR, Asm_GetEs() & 0xFFF8);
-    //Vmx_VmWrite(GUEST_CS_SELECTOR, Asm_GetCs() & 0xFFF8);
-    //Vmx_VmWrite(GUEST_DS_SELECTOR, Asm_GetDs() & 0xFFF8);
-    //Vmx_VmWrite(GUEST_FS_SELECTOR, Asm_GetFs() & 0xFFF8);
-    //Vmx_VmWrite(GUEST_GS_SELECTOR, Asm_GetGs() & 0xFFF8);
-    //Vmx_VmWrite(GUEST_SS_SELECTOR, Asm_GetSs() & 0xFFF8);
-    //Vmx_VmWrite(GUEST_TR_SELECTOR, Asm_GetTr() & 0xFFF8);
+    Vmx_VmWrite(GUEST_ES_SELECTOR, Asm_GetEs() & 0xFFF8);
+    Vmx_VmWrite(GUEST_CS_SELECTOR, Asm_GetCs() & 0xFFF8);
+    Vmx_VmWrite(GUEST_DS_SELECTOR, Asm_GetDs() & 0xFFF8);
+    Vmx_VmWrite(GUEST_FS_SELECTOR, Asm_GetFs() & 0xFFF8);
+    Vmx_VmWrite(GUEST_GS_SELECTOR, Asm_GetGs() & 0xFFF8);
+    Vmx_VmWrite(GUEST_SS_SELECTOR, Asm_GetSs() & 0xFFF8);
+    Vmx_VmWrite(GUEST_TR_SELECTOR, Asm_GetTr() & 0xFFF8);
 
-    //Vmx_VmWrite(GUEST_ES_AR_BYTES,      0x10000);
-    //Vmx_VmWrite(GUEST_FS_AR_BYTES,      0x10000);
-    //Vmx_VmWrite(GUEST_DS_AR_BYTES,      0x10000);
-    //Vmx_VmWrite(GUEST_SS_AR_BYTES,      0x10000);
-    //Vmx_VmWrite(GUEST_GS_AR_BYTES,      0x10000);
-    //Vmx_VmWrite(GUEST_LDTR_AR_BYTES,    0x10000);
+    Vmx_VmWrite(GUEST_ES_AR_BYTES,      0x10000);
+    Vmx_VmWrite(GUEST_FS_AR_BYTES,      0x10000);
+    Vmx_VmWrite(GUEST_DS_AR_BYTES,      0x10000);
+    Vmx_VmWrite(GUEST_SS_AR_BYTES,      0x10000);
+    Vmx_VmWrite(GUEST_GS_AR_BYTES,      0x10000);
+    Vmx_VmWrite(GUEST_LDTR_AR_BYTES,    0x10000);
 
-    //Vmx_VmWrite(GUEST_CS_AR_BYTES,  0xc09b);
-    //Vmx_VmWrite(GUEST_CS_BASE,      0);
-    //Vmx_VmWrite(GUEST_CS_LIMIT,     0xffffffff);
+    Vmx_VmWrite(GUEST_CS_AR_BYTES,  0xc09b);
+    Vmx_VmWrite(GUEST_CS_BASE,      0);
+    Vmx_VmWrite(GUEST_CS_LIMIT,     0xffffffff);
 
-    //Vmx_VmWrite(GUEST_TR_AR_BYTES,  0x008b);
-    //Vmx_VmWrite(GUEST_TR_BASE,      0x80042000);
-    //Vmx_VmWrite(GUEST_TR_LIMIT,     0x20ab);
+    Vmx_VmWrite(GUEST_TR_AR_BYTES,  0x008b);
+    Vmx_VmWrite(GUEST_TR_BASE,      0x80042000);
+    Vmx_VmWrite(GUEST_TR_LIMIT,     0x20ab);
 
 
-    //Vmx_VmWrite(GUEST_GDTR_BASE,    GdtBase);
-    //Vmx_VmWrite(GUEST_GDTR_LIMIT,   Asm_GetGdtLimit());
-    //Vmx_VmWrite(GUEST_IDTR_BASE,    IdtBase);
-    //Vmx_VmWrite(GUEST_IDTR_LIMIT,   Asm_GetIdtLimit());
+    Vmx_VmWrite(GUEST_GDTR_BASE,    GdtBase);
+    Vmx_VmWrite(GUEST_GDTR_LIMIT,   Asm_GetGdtLimit());
+    Vmx_VmWrite(GUEST_IDTR_BASE,    IdtBase);
+    Vmx_VmWrite(GUEST_IDTR_LIMIT,   Asm_GetIdtLimit());
 
-    //Vmx_VmWrite(GUEST_IA32_DEBUGCTL,        Asm_ReadMsr(MSR_IA32_DEBUGCTL)&0xFFFFFFFF);
-    //Vmx_VmWrite(GUEST_IA32_DEBUGCTL_HIGH,   Asm_ReadMsr(MSR_IA32_DEBUGCTL)>>32);
+    Vmx_VmWrite(GUEST_IA32_DEBUGCTL,        Asm_ReadMsr(MSR_IA32_DEBUGCTL)&0xFFFFFFFF);
+    Vmx_VmWrite(GUEST_IA32_DEBUGCTL_HIGH,   Asm_ReadMsr(MSR_IA32_DEBUGCTL)>>32);
 
-    //Vmx_VmWrite(GUEST_SYSENTER_CS,          Asm_ReadMsr(MSR_IA32_SYSENTER_CS)&0xFFFFFFFF);
-    //Vmx_VmWrite(GUEST_SYSENTER_ESP,         Asm_ReadMsr(MSR_IA32_SYSENTER_ESP)&0xFFFFFFFF);
-    //Vmx_VmWrite(GUEST_SYSENTER_EIP,         Asm_ReadMsr(MSR_IA32_SYSENTER_EIP)&0xFFFFFFFF); // KiFastCallEntry
+    Vmx_VmWrite(GUEST_SYSENTER_CS,          Asm_ReadMsr(MSR_IA32_SYSENTER_CS)&0xFFFFFFFF);
+    Vmx_VmWrite(GUEST_SYSENTER_ESP,         Asm_ReadMsr(MSR_IA32_SYSENTER_ESP)&0xFFFFFFFF);
+    Vmx_VmWrite(GUEST_SYSENTER_EIP,         Asm_ReadMsr(MSR_IA32_SYSENTER_EIP)&0xFFFFFFFF); // KiFastCallEntry
 
-    //Vmx_VmWrite(GUEST_RSP,  ((ULONG)g_VMXCPU.pStack) + 0x1000);     //Guest 临时栈
-    //Vmx_VmWrite(GUEST_RIP,  (ULONG)GuestEntry);                     // 客户机的入口点
+    Vmx_VmWrite(GUEST_RSP,  ((ULONG)g_VMXCPU.pStack) + 0x1000);     //Guest 临时栈
+    Vmx_VmWrite(GUEST_RIP,  (ULONG)GuestEntry);                     // 客户机的入口点
 
-    //Vmx_VmWrite(VMCS_LINK_POINTER, 0xffffffff);
-    //Vmx_VmWrite(VMCS_LINK_POINTER_HIGH, 0xffffffff);
+    Vmx_VmWrite(VMCS_LINK_POINTER, 0xffffffff);
+    Vmx_VmWrite(VMCS_LINK_POINTER_HIGH, 0xffffffff);
 
-    ////
-    //// 2.Host State Area
-    ////
-    //Vmx_VmWrite(HOST_CR0, Asm_GetCr0());
-    //Vmx_VmWrite(HOST_CR3, Asm_GetCr3());
-    //Vmx_VmWrite(HOST_CR4, Asm_GetCr4());
+    //
+    // 2.Host State Area 
+    // 这没初始化,错误号也是 7
+    Vmx_VmWrite(HOST_CR0, Asm_GetCr0());
+    Vmx_VmWrite(HOST_CR3, Asm_GetCr3());
+    Vmx_VmWrite(HOST_CR4, Asm_GetCr4());
 
-    //Vmx_VmWrite(HOST_ES_SELECTOR, Asm_GetEs() & 0xFFF8);
-    //Vmx_VmWrite(HOST_CS_SELECTOR, Asm_GetCs() & 0xFFF8);
-    //Vmx_VmWrite(HOST_DS_SELECTOR, Asm_GetDs() & 0xFFF8);
-    //Vmx_VmWrite(HOST_FS_SELECTOR, Asm_GetFs() & 0xFFF8);
-    //Vmx_VmWrite(HOST_GS_SELECTOR, Asm_GetGs() & 0xFFF8);
-    //Vmx_VmWrite(HOST_SS_SELECTOR, Asm_GetSs() & 0xFFF8);
-    //Vmx_VmWrite(HOST_TR_SELECTOR, Asm_GetTr() & 0xFFF8);
+    Vmx_VmWrite(HOST_ES_SELECTOR, Asm_GetEs() & 0xFFF8);
+    Vmx_VmWrite(HOST_CS_SELECTOR, Asm_GetCs() & 0xFFF8);
+    Vmx_VmWrite(HOST_DS_SELECTOR, Asm_GetDs() & 0xFFF8);
+    Vmx_VmWrite(HOST_FS_SELECTOR, Asm_GetFs() & 0xFFF8);
+    Vmx_VmWrite(HOST_GS_SELECTOR, Asm_GetGs() & 0xFFF8);
+    Vmx_VmWrite(HOST_SS_SELECTOR, Asm_GetSs() & 0xFFF8);
+    Vmx_VmWrite(HOST_TR_SELECTOR, Asm_GetTr() & 0xFFF8);
 
-    //Vmx_VmWrite(HOST_TR_BASE, 0x80042000);
+    Vmx_VmWrite(HOST_TR_BASE, 0x80042000);
 
-    //Vmx_VmWrite(HOST_GDTR_BASE, GdtBase);
-    //Vmx_VmWrite(HOST_IDTR_BASE, IdtBase);
+    Vmx_VmWrite(HOST_GDTR_BASE, GdtBase);
+    Vmx_VmWrite(HOST_IDTR_BASE, IdtBase);
 
-    //Vmx_VmWrite(HOST_IA32_SYSENTER_CS,  Asm_ReadMsr(MSR_IA32_SYSENTER_CS)&0xFFFFFFFF);
-    //Vmx_VmWrite(HOST_IA32_SYSENTER_ESP, Asm_ReadMsr(MSR_IA32_SYSENTER_ESP)&0xFFFFFFFF);
-    //Vmx_VmWrite(HOST_IA32_SYSENTER_EIP, Asm_ReadMsr(MSR_IA32_SYSENTER_EIP)&0xFFFFFFFF); // KiFastCallEntry
+    Vmx_VmWrite(HOST_IA32_SYSENTER_CS,  Asm_ReadMsr(MSR_IA32_SYSENTER_CS)&0xFFFFFFFF);
+    Vmx_VmWrite(HOST_IA32_SYSENTER_ESP, Asm_ReadMsr(MSR_IA32_SYSENTER_ESP)&0xFFFFFFFF);
+    Vmx_VmWrite(HOST_IA32_SYSENTER_EIP, Asm_ReadMsr(MSR_IA32_SYSENTER_EIP)&0xFFFFFFFF); // KiFastCallEntry
 
-    //Vmx_VmWrite(HOST_RSP,   ((ULONG)g_VMXCPU.pStack) + 0x2000);     //Host 临时栈
-    //Vmx_VmWrite(HOST_RIP,   (ULONG)VMMEntryPoint);                  //这里定义我们的VMM处理程序入口
+    Vmx_VmWrite(HOST_RSP,   ((ULONG)g_VMXCPU.pStack) + 0x2000);     //Host 临时栈
+    Vmx_VmWrite(HOST_RIP,   (ULONG)VMMEntryPoint);                  //这里定义我们的VMM处理程序入口
 
-    ////
-    //// 3.虚拟机运行控制域
-    ////
-    //Vmx_VmWrite(PIN_BASED_VM_EXEC_CONTROL, VmxAdjustControls(0, MSR_IA32_VMX_PINBASED_CTLS));
-    //Vmx_VmWrite(CPU_BASED_VM_EXEC_CONTROL, VmxAdjustControls(0, MSR_IA32_VMX_PROCBASED_CTLS));
 
-    ////
-    //// 4.VMEntry运行控制域
-    ////
-    //Vmx_VmWrite(VM_ENTRY_CONTROLS, VmxAdjustControls(0, MSR_IA32_VMX_ENTRY_CTLS));
+	// 1.Guest State fields
+    // 2.Host State  fields
+    // 3.Vm Control  fields
+    //
+    //    3.1 vm execution control  -> 24.6 VM-EXECUTION CONTROL FIELDS -> 其它有些必须设置为1,有些必须设置为0. 具体请读这一章
+    // The IA32_VMX_PINBASED_CTLS MSR (index 481H)  see Appendix A.3.1 -> 24.6.1 Pin-Based      VM-Execution      Controls
+	// 0000003f'00000016 前面32bit表示可以设置成1.后面32bit必须设置为1
+	// MSR_IA32_VMX_PROCBASED_CTLS MSR (index 482H) see Appendix A.3.2 -> 24.6.2 Processor-Based VM-Execution Controls
+	// fff9fffe'0401e172 前面32bit表示可以设置成1.后面32bit必须设置为1
+	// bit 15 CR3-load exiting
+	// bit 16 CR3-store exiting
+	// 如果你想拦截
+	// bit 23   DR  // 执行这些指令要不要退出
+	// bit 25   Use I/O bitmaps
+	// bit 28   Use MSR bitmaps
+    //    
+    //
+    // 3.虚拟机运行控制域
+    //
+    Vmx_VmWrite(PIN_BASED_VM_EXEC_CONTROL, VmxAdjustControls(0, MSR_IA32_VMX_PINBASED_CTLS));
+    Vmx_VmWrite(CPU_BASED_VM_EXEC_CONTROL, VmxAdjustControls(0, MSR_IA32_VMX_PROCBASED_CTLS));
 
-    ////
-    //// 5.VMExit运行控制域
-    ////
-    //Vmx_VmWrite(VM_EXIT_CONTROLS, VmxAdjustControls(0, MSR_IA32_VMX_EXIT_CTLS));
+    //
+    //    3.3 vm entry     control
+    // 4.VMEntry运行控制域
+    //
+    Vmx_VmWrite(VM_ENTRY_CONTROLS, VmxAdjustControls(0, MSR_IA32_VMX_ENTRY_CTLS));
+
+    //
+    //    3.2 vm exit      control
+    // 5.VMExit运行控制域
+    //
+    Vmx_VmWrite(VM_EXIT_CONTROLS, VmxAdjustControls(0, MSR_IA32_VMX_EXIT_CTLS));
+
 
 
     Vmx_VmLaunch();  //打开新世界大门
@@ -246,6 +267,8 @@ void SetupVMCS()
     // 如果执行成功不会来这执行..所以失败了走这..直接查看错误信息
     // 所以这是调试的好地方 注释 000007
     // 30.4 VM INSTRUCTION ERROR NUMBERS 这里解析出错码
+    // 
+
     g_VMXCPU.bVTStartSuccess = FALSE;   
 
     Log("ERROR:VmLaunch指令调用失败!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", Vmx_VmRead(VM_INSTRUCTION_ERROR))
