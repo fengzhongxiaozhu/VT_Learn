@@ -41,6 +41,8 @@ NTSTATUS
     // bit 48    ?
     // bit 49    ?
     // bit 53:50 ?
+    // 
+    // 26
     if (!StartVirtualTechnology()){
         Log(("Cpu 开启VT失败"), -1);
         return STATUS_UNSUCCESSFUL;
