@@ -69,12 +69,23 @@ static void  VMMEntryPointEbd(void)
     ULONG ExitInstructionLength;
     ULONG GuestResumeEIP;
 
+    // ExitReason = 800000021  
+    // 24.9.1 Basic VM-Exit Information 
+	// bit 31   VM-entry failure (0 = true VM exit; 1 = VM-entry failure)
+    // APPENDIX C    VMX BASIC EXIT REASONS
+	// 21 转换成10进制 33 VM-entry failure due to invalid guest state. A VM entry failed one of the checks identified in Section 26.3.1.
     ExitReason              = Vmx_VmRead(VM_EXIT_REASON);
     ExitInstructionLength   = Vmx_VmRead(VM_EXIT_INSTRUCTION_LEN);
 
     g_GuestRegs.eflags  = Vmx_VmRead(GUEST_RFLAGS);
     g_GuestRegs.esp     = Vmx_VmRead(GUEST_RSP);
     g_GuestRegs.eip     = Vmx_VmRead(GUEST_RIP);
+
+    Log("ExitReason:      %p", ExitReason);
+    Log("g_GuestRegs.eip: %p", g_GuestRegs.eip);
+
+    // Guest exit -> Host
+    __asm int 3  
 
     switch(ExitReason)
     {
@@ -105,7 +116,8 @@ static void  VMMEntryPointEbd(void)
     Vmx_VmWrite(GUEST_RFLAGS,   g_GuestRegs.eflags);
 }
 
-
+// 裸函数 不建议使用局部变量..因为用到了栈.编译器生成 EBP+4 -4 结果不可预测..也不建议使用全局变量
+// 需要使用很长的函数,那么再封装一层.直接调用封装来进行..编译器生成不可预测.
 void __declspec(naked) VMMEntryPoint(void)
 {
     __asm{
@@ -127,9 +139,15 @@ void __declspec(naked) VMMEntryPoint(void)
         mov ax, gs
         mov gs, ax
 
-        int 0x3
     }
+
+    // Guest Exit 之后就到这了
+
+    // 调试错误码 
     VMMEntryPointEbd();
+
+
+
     __asm{
         mov  eax, g_GuestRegs.eax
         mov  ecx, g_GuestRegs.ecx

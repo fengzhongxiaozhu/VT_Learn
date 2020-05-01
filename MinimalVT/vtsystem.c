@@ -91,7 +91,7 @@ void g_exit(void);
 void __declspec(naked) GuestEntry()
 {
     __asm{
-        mov ax, es
+        mov ax, es  // 加载属性
         mov es, ax
 
         mov ax, ds
@@ -106,6 +106,7 @@ void __declspec(naked) GuestEntry()
         mov ax, ss
         mov ss, ax
     }
+    Vmx_VmCall(); // 调用 exit 指令 // 发生 
 
     __asm{
         //jmp g_exit
@@ -144,59 +145,67 @@ void SetupVMCS()
     GdtBase = Asm_GetGdtBase();
     IdtBase = Asm_GetIdtBase();
 
-    ////
-    //// 1.  24.4.1 Guest Register State
-    //// 为什么不能直接写内存而是要使用 VmWrite 呢.你想啊,段描述符这么碎,因为要兼容以前的程序.intel如果写死这块内存.那么会变得跟描述符一样.所以设计一下抽象出来.方便以后灵活更改.还有可能写某些内存会操作寄存器.
-    //// APPENDIX B    FIELD ENCODING IN VMCS
-    //// 这没有初始化那么错误代码是  30.4 VM INSTRUCTION ERROR NUMBERS -> 7 VM entry with invalid control field(s)2,3
-    //Vmx_VmWrite(GUEST_CR0, Asm_GetCr0());
-    //Vmx_VmWrite(GUEST_CR3, Asm_GetCr3());
-    //Vmx_VmWrite(GUEST_CR4, Asm_GetCr4());
+    // CHAPTER 26   VM ENTRIES
+    //
+    // 1.  24.4.1 Guest Register State
+    // 为什么不能直接写内存而是要使用 VmWrite 呢.你想啊,段描述符这么碎,因为要兼容以前的程序.intel如果写死这块内存.那么会变得跟描述符一样.所以设计一下抽象出来.方便以后灵活更改.还有可能写某些内存会操作寄存器.
+    // APPENDIX B    FIELD ENCODING IN VMCS
+    // 这没有初始化那么错误代码是  30.4 VM INSTRUCTION ERROR NUMBERS -> 7 VM entry with invalid control field(s)2,3
+    Vmx_VmWrite(GUEST_CR0, Asm_GetCr0());
+    Vmx_VmWrite(GUEST_CR3, Asm_GetCr3());
+    Vmx_VmWrite(GUEST_CR4, Asm_GetCr4());
 
-    //Vmx_VmWrite(GUEST_DR7, 0x400);
-    //Vmx_VmWrite(GUEST_RFLAGS, Asm_GetEflags() & ~0x200);
+    // 17.3       DEBUG       EXCEPTIONS
+    Vmx_VmWrite(GUEST_DR7, 0x400);
+     
+    // 设置RFlags和 关中断
+    Vmx_VmWrite(GUEST_RFLAGS, Asm_GetEflags() & ~0x200);
 
-    //Vmx_VmWrite(GUEST_ES_SELECTOR, Asm_GetEs() & 0xFFF8);
-    //Vmx_VmWrite(GUEST_CS_SELECTOR, Asm_GetCs() & 0xFFF8);
-    //Vmx_VmWrite(GUEST_DS_SELECTOR, Asm_GetDs() & 0xFFF8);
-    //Vmx_VmWrite(GUEST_FS_SELECTOR, Asm_GetFs() & 0xFFF8);
-    //Vmx_VmWrite(GUEST_GS_SELECTOR, Asm_GetGs() & 0xFFF8);
-    //Vmx_VmWrite(GUEST_SS_SELECTOR, Asm_GetSs() & 0xFFF8);
-    //Vmx_VmWrite(GUEST_TR_SELECTOR, Asm_GetTr() & 0xFFF8);
+    Vmx_VmWrite(GUEST_ES_SELECTOR, Asm_GetEs() & 0xFFF8);
+    Vmx_VmWrite(GUEST_CS_SELECTOR, Asm_GetCs() & 0xFFF8);
+    Vmx_VmWrite(GUEST_DS_SELECTOR, Asm_GetDs() & 0xFFF8);
+    Vmx_VmWrite(GUEST_FS_SELECTOR, Asm_GetFs() & 0xFFF8);
+    Vmx_VmWrite(GUEST_GS_SELECTOR, Asm_GetGs() & 0xFFF8);
+    Vmx_VmWrite(GUEST_SS_SELECTOR, Asm_GetSs() & 0xFFF8);
+    Vmx_VmWrite(GUEST_TR_SELECTOR, Asm_GetTr() & 0xFFF8);
 
-    //Vmx_VmWrite(GUEST_ES_AR_BYTES,      0x10000);
-    //Vmx_VmWrite(GUEST_FS_AR_BYTES,      0x10000);
-    //Vmx_VmWrite(GUEST_DS_AR_BYTES,      0x10000);
-    //Vmx_VmWrite(GUEST_SS_AR_BYTES,      0x10000);
-    //Vmx_VmWrite(GUEST_GS_AR_BYTES,      0x10000);
-    //Vmx_VmWrite(GUEST_LDTR_AR_BYTES,    0x10000);
+    // Table 24-4.  Format of Pending-Debug-Exceptions (Contd.) -> Bit 16 RTMWhen set, this bit indicates that a debug exception (#DB) or a breakpoint exception (#BP) occurred inside an RTM region while advanced debugging of RTM transactional regions was enabled (see Section 16.3.7, “RTM-Enabled Debugger Support,” of Intel® 64 and IA-32 Architectures Software Developer’s Manual, Volume 1)
+    Vmx_VmWrite(GUEST_ES_AR_BYTES,      0x10000); // 设置成不可用状态,就不会直接加载.可用状态的话Guest直接加载了.发现属性都不对就出错了 // 在 GuestEntry 进行可用话处理
+    Vmx_VmWrite(GUEST_FS_AR_BYTES,      0x10000);
+    Vmx_VmWrite(GUEST_DS_AR_BYTES,      0x10000);
+    Vmx_VmWrite(GUEST_SS_AR_BYTES,      0x10000);
+    Vmx_VmWrite(GUEST_GS_AR_BYTES,      0x10000);
+    Vmx_VmWrite(GUEST_LDTR_AR_BYTES,    0x10000);
 
-    //Vmx_VmWrite(GUEST_CS_AR_BYTES,  0xc09b);
-    //Vmx_VmWrite(GUEST_CS_BASE,      0);
-    //Vmx_VmWrite(GUEST_CS_LIMIT,     0xffffffff);
+    // 为什么cs要直接填呢,因为 GuestEntry 函数需要用到啊.不然你进去咋跑代码
+    Vmx_VmWrite(GUEST_CS_AR_BYTES,  0xc09b);
+    Vmx_VmWrite(GUEST_CS_BASE,      0);
+    Vmx_VmWrite(GUEST_CS_LIMIT,     0xffffffff);
 
-    //Vmx_VmWrite(GUEST_TR_AR_BYTES,  0x008b);
-    //Vmx_VmWrite(GUEST_TR_BASE,      0x80042000);
-    //Vmx_VmWrite(GUEST_TR_LIMIT,     0x20ab);
+    Vmx_VmWrite(GUEST_TR_AR_BYTES,  0x008b);
+    Vmx_VmWrite(GUEST_TR_BASE,      0x80042000);
+    Vmx_VmWrite(GUEST_TR_LIMIT,     0x20ab);
 
 
-    //Vmx_VmWrite(GUEST_GDTR_BASE,    GdtBase);
-    //Vmx_VmWrite(GUEST_GDTR_LIMIT,   Asm_GetGdtLimit());
-    //Vmx_VmWrite(GUEST_IDTR_BASE,    IdtBase);
-    //Vmx_VmWrite(GUEST_IDTR_LIMIT,   Asm_GetIdtLimit());
+    Vmx_VmWrite(GUEST_GDTR_BASE,    GdtBase);
+    Vmx_VmWrite(GUEST_GDTR_LIMIT,   Asm_GetGdtLimit());
+    Vmx_VmWrite(GUEST_IDTR_BASE,    IdtBase);
+    Vmx_VmWrite(GUEST_IDTR_LIMIT,   Asm_GetIdtLimit());
 
-    //Vmx_VmWrite(GUEST_IA32_DEBUGCTL,        Asm_ReadMsr(MSR_IA32_DEBUGCTL)&0xFFFFFFFF);
-    //Vmx_VmWrite(GUEST_IA32_DEBUGCTL_HIGH,   Asm_ReadMsr(MSR_IA32_DEBUGCTL)>>32);
+    Vmx_VmWrite(GUEST_IA32_DEBUGCTL,        Asm_ReadMsr(MSR_IA32_DEBUGCTL)&0xFFFFFFFF);
+    Vmx_VmWrite(GUEST_IA32_DEBUGCTL_HIGH,   Asm_ReadMsr(MSR_IA32_DEBUGCTL)>>32);
 
-    //Vmx_VmWrite(GUEST_SYSENTER_CS,          Asm_ReadMsr(MSR_IA32_SYSENTER_CS)&0xFFFFFFFF);
-    //Vmx_VmWrite(GUEST_SYSENTER_ESP,         Asm_ReadMsr(MSR_IA32_SYSENTER_ESP)&0xFFFFFFFF);
-    //Vmx_VmWrite(GUEST_SYSENTER_EIP,         Asm_ReadMsr(MSR_IA32_SYSENTER_EIP)&0xFFFFFFFF); // KiFastCallEntry
+    Vmx_VmWrite(GUEST_SYSENTER_CS,          Asm_ReadMsr(MSR_IA32_SYSENTER_CS)&0xFFFFFFFF);
+    Vmx_VmWrite(GUEST_SYSENTER_ESP,         Asm_ReadMsr(MSR_IA32_SYSENTER_ESP)&0xFFFFFFFF);
+    Vmx_VmWrite(GUEST_SYSENTER_EIP,         Asm_ReadMsr(MSR_IA32_SYSENTER_EIP)&0xFFFFFFFF); // KiFastCallEntry
 
-    //Vmx_VmWrite(GUEST_RSP,  ((ULONG)g_VMXCPU.pStack) + 0x1000);     //Guest 临时栈
-    //Vmx_VmWrite(GUEST_RIP,  (ULONG)GuestEntry);                     // 客户机的入口点
+    Vmx_VmWrite(GUEST_RSP,  ((ULONG)g_VMXCPU.pStack) + 0x1000);     //Guest 临时栈
+    Vmx_VmWrite(GUEST_RIP,  (ULONG)GuestEntry);                     // 客户机的入口点
 
-    //Vmx_VmWrite(VMCS_LINK_POINTER, 0xffffffff);
-    //Vmx_VmWrite(VMCS_LINK_POINTER_HIGH, 0xffffffff);
+    // 24.10    VMCS TYPES: ORDINARY AND SHADOW // 链表指针,怕你Guest信息写不下,这个必须要的.
+    // 如果不使用的话 31.6 PREPARATION AND LAUNCHING A VIRTUAL MACHINE
+    Vmx_VmWrite(VMCS_LINK_POINTER, 0xffffffff); // 为什么要用ffffff不用0呢? 这是物理地址..物理地址 0 是bios的东西
+    Vmx_VmWrite(VMCS_LINK_POINTER_HIGH, 0xffffffff);
 
     //
     // 2.   24.5 HOST-STATE AREA
@@ -259,6 +268,7 @@ void SetupVMCS()
     ////
     ////    3.2     24.7    VM-EXIT CONTROL FIELDS
     Vmx_VmWrite(VM_EXIT_CONTROLS, VmxAdjustControls(0, MSR_IA32_VMX_EXIT_CTLS));
+
 
     Log("ESP == %p",g_VMXCPU.pStack);
 

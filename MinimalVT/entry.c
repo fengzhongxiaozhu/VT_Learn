@@ -56,7 +56,7 @@ NTSTATUS
     //    mov back_position, offset RETPOSITION
     //}
 
-    //StartVirtualTechnology();       //自此不归
+    StartVirtualTechnology();       //自此不归
 
 	return STATUS_SUCCESS;
 }
