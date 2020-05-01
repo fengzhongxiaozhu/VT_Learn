@@ -67,7 +67,7 @@ static void  VMMEntryPointEbd(void)
 {
     ULONG ExitReason;
     ULONG ExitInstructionLength;
-    ULONG GuestResumeEIP;
+    ULONG GuestResumeEIP = 0;
 
     // ExitReason = 800000021  
     // 24.9.1 Basic VM-Exit Information 
@@ -82,38 +82,41 @@ static void  VMMEntryPointEbd(void)
     g_GuestRegs.eip     = Vmx_VmRead(GUEST_RIP);
 
     Log("ExitReason:      %p", ExitReason);
-    Log("g_GuestRegs.eip: %p", g_GuestRegs.eip);
+    Log("GuestResumeEIP:  %p", &GuestResumeEIP);
 
     // Guest exit -> Host
-    __asm int 3  
+    //__asm int 3  
 
-    switch(ExitReason)
-    {
-    case EXIT_REASON_CPUID:
-        HandleCPUID();
-        Log("EXIT_REASON_CPUID", 0)
-                break;
+    //switch(ExitReason)
+    //{
+    //case EXIT_REASON_CPUID:
+    //    HandleCPUID();
+    //    Log("EXIT_REASON_CPUID", 0)
+    //            break;
 
-    case EXIT_REASON_VMCALL:
-        HandleVmCall();
-        Log("EXIT_REASON_VMCALL", 0)
-                break;
+    //case EXIT_REASON_VMCALL:
+    //    HandleVmCall();
+    //    Log("EXIT_REASON_VMCALL", 0)
+    //            break;
 
-    case EXIT_REASON_CR_ACCESS:
-        HandleCrAccess();
-        //Log("EXIT_REASON_CR_ACCESS", 0)
-        break;
+    //case EXIT_REASON_CR_ACCESS:
+    //    HandleCrAccess();
+    //    //Log("EXIT_REASON_CR_ACCESS", 0)
+    //    break;
 
-    default:
-        Log("not handled reason: %p", ExitReason);
-        __asm int 3
-    }
+    //default:
+    //    Log("not handled reason: %p", ExitReason);
+    //    __asm int 3
+    //}
 
 //Resume:
+    Vmx_VmxOff(); // 调试技巧
+
     GuestResumeEIP = g_GuestRegs.eip + ExitInstructionLength;
     Vmx_VmWrite(GUEST_RIP,      GuestResumeEIP);
     Vmx_VmWrite(GUEST_RSP,      g_GuestRegs.esp);
     Vmx_VmWrite(GUEST_RFLAGS,   g_GuestRegs.eflags);
+
 }
 
 // 裸函数 不建议使用局部变量..因为用到了栈.编译器生成 EBP+4 -4 结果不可预测..也不建议使用全局变量
@@ -138,11 +141,9 @@ void __declspec(naked) VMMEntryPoint(void)
         mov fs, ax
         mov ax, gs
         mov gs, ax
-
     }
 
     // Guest Exit 之后就到这了
-
     // 调试错误码 
     VMMEntryPointEbd();
 

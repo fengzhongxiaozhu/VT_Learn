@@ -33,7 +33,7 @@ NTSTATUS
     // 开启 VT 环境 需要 一块内存.用来储存 VMM 信息.客户机和主机 等等
     // 这块需求的内存大小和其它信息在 
     // APPENDIX AVMX CAPABILITY REPORTING FACILITY -> A.1 BASIC VMX INFORMATION
-    // IA32_VMX_BASIC MSR (index 480H)
+    // IA32_VMX_BASIC MSR (index 480H) 
     // 00d81000 00000001
     // 30:0 版本信息
     // Bit 31 is always 0.
@@ -55,8 +55,6 @@ NTSTATUS
     //    mov g_exit_esp, esp
     //    mov back_position, offset RETPOSITION
     //}
-
-    StartVirtualTechnology();       //自此不归
 
 	return STATUS_SUCCESS;
 }

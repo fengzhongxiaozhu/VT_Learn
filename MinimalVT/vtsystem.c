@@ -105,6 +105,18 @@ void __declspec(naked) GuestEntry()
 
         mov ax, ss
         mov ss, ax
+
+        // 这里为什么不能使用 int 呢..处理int 0x3事件有大量的代码,有些会导致Exit -> Host 然后和内核调试器通信.但是内核调试器已经和Guest通信了,全局变量已经记录了内核调试器已经开启.进不去了
+        // 调试这里2个方法 
+        // 1. 驱动内存申请一个有特征内存的 全局变量 ,然后 Host -> VMMEntryPointEbd 调试那里 将 EIP 写入这个全局变量..利用CE 搜索内存特征
+        // ULONG g_Dbg[4];
+        // g_Dbg[0] = 0x12345678;
+        // g_Dbg[1] = 0x76543210;
+        // 2. 申请一个全局变量,Host -> VMMEntryPointEbd 调试那里将eip写入全局变量. 执行Vmx_VmxOff 指令,关闭虚拟机.将所有0环寄存器恢复,它就会当什么事情都没有发生,返回0环继续执行.你也就得到了 出错时候的EIP // 恢复快照 u 这个EIP
+        // VMMEntryPointEbd -> Vmx_VmxOff();
+        // kd> dd GuestResumeEIP
+        // u [GuestResumeEIP]
+        int 0x3
     }
     Vmx_VmCall(); // 调用 exit 指令 // 发生 
 
