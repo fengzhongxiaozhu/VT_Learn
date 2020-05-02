@@ -81,36 +81,34 @@ static void  VMMEntryPointEbd(void)
     g_GuestRegs.esp     = Vmx_VmRead(GUEST_RSP);
     g_GuestRegs.eip     = Vmx_VmRead(GUEST_RIP);
 
-    Log("ExitReason:      %p", ExitReason);
-    Log("GuestResumeEIP:  %p", &GuestResumeEIP);
+    //Log("ExitReason:      %p", ExitReason);
+    //Log("GuestResumeEIP:  %p", &GuestResumeEIP);
 
-    // Guest exit -> Host
-    //__asm int 3  
+    // 27.2.1 Basic VM-Exit Information
+    switch(ExitReason) {
+        //case EXIT_REASON_CPUID:
+        //    HandleCPUID();
+        //    Log("EXIT_REASON_CPUID", 0)
+        //            break;
 
-    //switch(ExitReason)
-    //{
-    //case EXIT_REASON_CPUID:
-    //    HandleCPUID();
-    //    Log("EXIT_REASON_CPUID", 0)
-    //            break;
+        //case EXIT_REASON_VMCALL:
+        //    HandleVmCall();
+        //    Log("EXIT_REASON_VMCALL", 0)
+        //            break;
 
-    //case EXIT_REASON_VMCALL:
-    //    HandleVmCall();
-    //    Log("EXIT_REASON_VMCALL", 0)
-    //            break;
+        // Table 27-2.  Exit Qualification for Task Switch
+        case EXIT_REASON_CR_ACCESS:
+            HandleCrAccess();
+            //Log("EXIT_REASON_CR_ACCESS", 0)
+            break;
 
-    //case EXIT_REASON_CR_ACCESS:
-    //    HandleCrAccess();
-    //    //Log("EXIT_REASON_CR_ACCESS", 0)
-    //    break;
-
-    //default:
-    //    Log("not handled reason: %p", ExitReason);
-    //    __asm int 3
-    //}
+        default:
+            Log("not handled reason: %p", ExitReason);
+            __asm int 3
+    }
 
 //Resume:
-    Vmx_VmxOff(); // 调试技巧
+    //Vmx_VmxOff(); // 调试技巧
 
     GuestResumeEIP = g_GuestRegs.eip + ExitInstructionLength;
     Vmx_VmWrite(GUEST_RIP,      GuestResumeEIP);

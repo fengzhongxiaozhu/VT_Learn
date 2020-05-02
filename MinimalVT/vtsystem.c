@@ -116,12 +116,10 @@ void __declspec(naked) GuestEntry()
         // VMMEntryPointEbd -> Vmx_VmxOff();
         // kd> dd GuestResumeEIP
         // u [GuestResumeEIP]
-        int 0x3
     }
-    Vmx_VmCall(); // 调用 exit 指令 // 发生 
 
     __asm{
-        //jmp g_exit
+        jmp g_exit
     }
 }
 
@@ -332,6 +330,7 @@ NTSTATUS StopVirtualTechnology()
     _CR4 uCr4;
     if(g_VMXCPU.bVTStartSuccess)
     {
+        //Vmx_VmxOff(); Guest 是没有权限执行这个指令的...例如3环你关闭内存页保护那不完了吗?//所以抛出异常让 Host 来处理
         g_vmcall_arg = 'SVT';
         __asm{
             pushad

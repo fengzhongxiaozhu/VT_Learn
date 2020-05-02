@@ -4,9 +4,17 @@
 #include "vtasm.h"
 #include "vtsystem.h"
 
+ULONG g_exit_esp;
+ULONG back_position;
+void __declspec(naked) g_exit() {
+	__asm {
+		mov esp, g_exit_esp
+		jmp back_position
+	}
+}
 
 VOID DriverUnload(PDRIVER_OBJECT pDriver){
-    //StopVirtualTechnology();
+    StopVirtualTechnology();
     DbgPrint("Driver is unloading...\r\n");
 }
 // 中文
@@ -42,19 +50,23 @@ NTSTATUS
     // bit 49    ?
     // bit 53:50 ?
     // 
-    // 26
+    __asm{
+        pushad
+        pushfd
+        mov g_exit_esp, esp
+        mov back_position, offset RETPOSITION
+    }
     if (!StartVirtualTechnology()){
         Log(("Cpu 开启VT失败"), -1);
         return STATUS_UNSUCCESSFUL;
     }
-
-
-    //__asm{
-    //    pushad
-    //    pushfd
-    //    mov g_exit_esp, esp
-    //    mov back_position, offset RETPOSITION
-    //}
-
+	//=============================================================
+RETPOSITION:
+	__asm {
+		popfd
+		popad
+	}
+	Log("GuestEntry~~~~~~", 0)
+    // 下面执行还会产生Exit // 所以在  exithandler 进行处理
 	return STATUS_SUCCESS;
 }
