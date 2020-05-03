@@ -1,10 +1,30 @@
 #include <ntddk.h>
 #define PAGE_SIZE 0x1000
 
+#define Log(message,value) {{KdPrint(("[MinVT] %-40s [%p]\n",message,value));}}
+
 ULONG64* ept_PML4T;
 
 static PVOID *pagesToFree;
 static int index = 0;
+
+
+// EPT 拆分
+//kd > r esp
+//esp = 80549bb0
+//kd > r cr3
+//cr3 = 0030a000
+//kd > !vtop 0030a000 80549bb0
+//Virtual address 80549bb0 translates to physical address 549bb0.
+//kd > .formats 549bb0
+//Binary:  00000000 01010100 10011011 10110000
+//只有32位,前面补00 
+//00000000 00000000 00000000 01010100 10011011 10110000
+//00000000 0      0  *8
+//0000000 00      0  *8
+//000000 010      2  *8
+//10100 1001      149*8
+//1011 10110000   BB0
 
 void initEptPagesPool()
 {
@@ -20,6 +40,7 @@ static ULONG64* AllocateOnePage()
     page = ExAllocatePoolWithTag(NonPagedPool, PAGE_SIZE, 'ept');
     if(!page)
         __asm int 3
+
     RtlZeroMemory(page, PAGE_SIZE);
     pagesToFree[index] = page;
     index++;

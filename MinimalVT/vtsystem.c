@@ -353,6 +353,9 @@ LLL:
         ExFreePool(g_VMXCPU.pVMCSRegion);
         ExFreePool(g_VMXCPU.pStack);
 
+        //27.5.2 Loading Host Segment and Descriptor - Table Registers   ->   he GDTR and IDTR limits are each set to FFFFH.
+        // 停止之后
+
         Log("SUCCESS:关闭VT成功!",0);
         Log("SUCCESS:现在这个CPU退出了VMX模式.",0);
     }
