@@ -1,4 +1,4 @@
-#ifndef VTASM_H
+﻿#ifndef VTASM_H
 #define VTASM_H
 
 typedef struct _MSR
@@ -180,3 +180,4 @@ void Vmx_VmResume();
 void Vmx_VmCall();
 
 #endif
+ 

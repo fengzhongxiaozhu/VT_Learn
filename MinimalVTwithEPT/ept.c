@@ -1,4 +1,4 @@
-#include <ntddk.h>
+﻿#include <ntddk.h>
 #define PAGE_SIZE 0x1000
 
 #define Log(message,value) {{KdPrint(("[MinVT] %-40s [%p]\n",message,value));}}
@@ -9,7 +9,7 @@ static PVOID *pagesToFree;
 static int index = 0;
 
 
-// EPT ���
+// EPT 拆分
 //kd > r esp
 //esp = 80549bb0
 //kd > r cr3
@@ -18,7 +18,7 @@ static int index = 0;
 //Virtual address 80549bb0 translates to physical address 549bb0.
 //kd > .formats 549bb0
 //Binary:  00000000 01010100 10011011 10110000
-//ֻ��32λ,ǰ�油00 
+//只有32位,前面补00 
 //00000000 00000000 00000000 01010100 10011011 10110000
 //00000000 0      0  *8
 //0000000 00      0  *8
@@ -101,3 +101,4 @@ void MyEptFree()
     ExFreePool(pagesToFree);
     index = 0;
 }
+ 

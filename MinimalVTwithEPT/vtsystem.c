@@ -1,4 +1,4 @@
-#include "vtsystem.h"
+ï»¿#include "vtsystem.h"
 #include "vtasm.h"
 #include "exithandler.h"
 
@@ -13,7 +13,7 @@ NTSTATUS AllocateVMXRegion()
     pVMXONRegion = ExAllocatePoolWithTag(NonPagedPool,0x1000,'vmon'); //4KB
     if (!pVMXONRegion)
     {
-        Log("ERROR:ÉêÇëVMXONÄÚ´æÇøÓòÊ§°Ü!",0);
+        Log("ERROR:ç”³è¯·VMXONå†…å­˜åŒºåŸŸå¤±è´¥!",0);
         return STATUS_MEMORY_NOT_ALLOCATED;
     }
     RtlZeroMemory(pVMXONRegion,0x1000);
@@ -21,7 +21,7 @@ NTSTATUS AllocateVMXRegion()
     pVMCSRegion = ExAllocatePoolWithTag(NonPagedPool,0x1000,'vmcs');
     if (!pVMCSRegion)
     {
-        Log("ERROR:ÉêÇëVMCSÄÚ´æÇøÓòÊ§°Ü!",0);
+        Log("ERROR:ç”³è¯·VMCSå†…å­˜åŒºåŸŸå¤±è´¥!",0);
         ExFreePool(pVMXONRegion);
         return STATUS_MEMORY_NOT_ALLOCATED;
     }
@@ -30,16 +30,16 @@ NTSTATUS AllocateVMXRegion()
     pStack = ExAllocatePoolWithTag(NonPagedPool,0x2000,'stck');
     if (!pStack)
     {
-        Log("ERROR:ÉêÇëËŞÖ÷»ú¶ÑÔØÇøÓòÊ§°Ü!",0);
+        Log("ERROR:ç”³è¯·å®¿ä¸»æœºå †è½½åŒºåŸŸå¤±è´¥!",0);
         ExFreePool(pVMXONRegion);
         ExFreePool(pVMCSRegion);
         return STATUS_MEMORY_NOT_ALLOCATED;
     }
     RtlZeroMemory(pStack,0x2000);
 
-    Log("TIP:VMXONÄÚ´æÇøÓòµØÖ·",pVMXONRegion);
-    Log("TIP:VMCSÄÚ´æÇøÓòµØÖ·",pVMCSRegion);
-    Log("TIP:ËŞÖ÷»ú¶ÑÔØÇøÓòµØÖ·",pStack);
+    Log("TIP:VMXONå†…å­˜åŒºåŸŸåœ°å€",pVMXONRegion);
+    Log("TIP:VMCSå†…å­˜åŒºåŸŸåœ°å€",pVMCSRegion);
+    Log("TIP:å®¿ä¸»æœºå †è½½åŒºåŸŸåœ°å€",pStack);
 
     g_VMXCPU.pVMXONRegion = pVMXONRegion;
     g_VMXCPU.pVMXONRegion_PA = MmGetPhysicalAddress(pVMXONRegion);
@@ -67,7 +67,7 @@ void SetupVMXRegion()
     *((PULONG)g_VMXCPU.pVMXONRegion) = uRevId;
     *((PULONG)g_VMXCPU.pVMCSRegion) = uRevId;
 
-    Log("TIP:VMX°æ±¾ºÅĞÅÏ¢",uRevId);
+    Log("TIP:VMXç‰ˆæœ¬å·ä¿¡æ¯",uRevId);
 
     *((PULONG)&uCr4) = Asm_GetCr4();
     uCr4.VMXE = 1;
@@ -79,10 +79,10 @@ void SetupVMXRegion()
 
     if (uEflags.CF != 0)
     {
-        Log("ERROR:VMXONÖ¸Áîµ÷ÓÃÊ§°Ü!",0);
+        Log("ERROR:VMXONæŒ‡ä»¤è°ƒç”¨å¤±è´¥!",0);
         return;
     }
-    Log("SUCCESS:VMXONÖ¸Áîµ÷ÓÃ³É¹¦!",0);
+    Log("SUCCESS:VMXONæŒ‡ä»¤è°ƒç”¨æˆåŠŸ!",0);
 }
 
 
@@ -138,10 +138,10 @@ void SetupVMCS()
     *((PULONG)&uEflags) = Asm_GetEflags();
     if (uEflags.CF != 0 || uEflags.ZF != 0)
     {
-        Log("ERROR:VMCLEARÖ¸Áîµ÷ÓÃÊ§°Ü!",0)
+        Log("ERROR:VMCLEARæŒ‡ä»¤è°ƒç”¨å¤±è´¥!",0)
         return;
     }
-    Log("SUCCESS:VMCLEARÖ¸Áîµ÷ÓÃ³É¹¦!",0)
+    Log("SUCCESS:VMCLEARæŒ‡ä»¤è°ƒç”¨æˆåŠŸ!",0)
     Vmx_VmPtrld(g_VMXCPU.pVMCSRegion_PA.LowPart, g_VMXCPU.pVMCSRegion_PA.HighPart);
 
     GdtBase = Asm_GetGdtBase();
@@ -193,8 +193,8 @@ void SetupVMCS()
     Vmx_VmWrite(GUEST_SYSENTER_ESP,         Asm_ReadMsr(MSR_IA32_SYSENTER_ESP)&0xFFFFFFFF);
     Vmx_VmWrite(GUEST_SYSENTER_EIP,         Asm_ReadMsr(MSR_IA32_SYSENTER_EIP)&0xFFFFFFFF); // KiFastCallEntry
 
-    Vmx_VmWrite(GUEST_RSP,  ((ULONG)g_VMXCPU.pStack) + 0x1000);     //Guest ÁÙÊ±Õ»
-    Vmx_VmWrite(GUEST_RIP,  (ULONG)GuestEntry);                     // ¿Í»§»úµÄÈë¿Úµã
+    Vmx_VmWrite(GUEST_RSP,  ((ULONG)g_VMXCPU.pStack) + 0x1000);     //Guest ä¸´æ—¶æ ˆ
+    Vmx_VmWrite(GUEST_RIP,  (ULONG)GuestEntry);                     // å®¢æˆ·æœºçš„å…¥å£ç‚¹
 
     Vmx_VmWrite(VMCS_LINK_POINTER, 0xffffffff);
     Vmx_VmWrite(VMCS_LINK_POINTER_HIGH, 0xffffffff);
@@ -223,11 +223,11 @@ void SetupVMCS()
     Vmx_VmWrite(HOST_IA32_SYSENTER_ESP, Asm_ReadMsr(MSR_IA32_SYSENTER_ESP)&0xFFFFFFFF);
     Vmx_VmWrite(HOST_IA32_SYSENTER_EIP, Asm_ReadMsr(MSR_IA32_SYSENTER_EIP)&0xFFFFFFFF); // KiFastCallEntry
 
-    Vmx_VmWrite(HOST_RSP,   ((ULONG)g_VMXCPU.pStack) + 0x2000);     //Host ÁÙÊ±Õ»
-    Vmx_VmWrite(HOST_RIP,   (ULONG)VMMEntryPoint);                  //ÕâÀï¶¨ÒåÎÒÃÇµÄVMM´¦Àí³ÌĞòÈë¿Ú
+    Vmx_VmWrite(HOST_RSP,   ((ULONG)g_VMXCPU.pStack) + 0x2000);     //Host ä¸´æ—¶æ ˆ
+    Vmx_VmWrite(HOST_RIP,   (ULONG)VMMEntryPoint);                  //è¿™é‡Œå®šä¹‰æˆ‘ä»¬çš„VMMå¤„ç†ç¨‹åºå…¥å£
 
     //
-    // 3.ĞéÄâ»úÔËĞĞ¿ØÖÆÓò
+    // 3.è™šæ‹Ÿæœºè¿è¡Œæ§åˆ¶åŸŸ
     //
     Vmx_VmWrite(PIN_BASED_VM_EXEC_CONTROL, VmxAdjustControls(0, MSR_IA32_VMX_PINBASED_CTLS));
 //for EPT
@@ -247,21 +247,21 @@ void SetupVMCS()
     Vmx_VmWrite(GUEST_PDPTR3_HIGH, MmGetPhysicalAddress((PVOID)0xc0603000).HighPart);
 
     //
-    // 4.VMEntryÔËĞĞ¿ØÖÆÓò
+    // 4.VMEntryè¿è¡Œæ§åˆ¶åŸŸ
     //
     Vmx_VmWrite(VM_ENTRY_CONTROLS, VmxAdjustControls(0, MSR_IA32_VMX_ENTRY_CTLS));
 
     //
-    // 5.VMExitÔËĞĞ¿ØÖÆÓò
+    // 5.VMExitè¿è¡Œæ§åˆ¶åŸŸ
     //
     Vmx_VmWrite(VM_EXIT_CONTROLS, VmxAdjustControls(0, MSR_IA32_VMX_EXIT_CTLS));
 
 
-    Vmx_VmLaunch();                     //´ò¿ªĞÂÊÀ½ç´óÃÅ
+    Vmx_VmLaunch();                     //æ‰“å¼€æ–°ä¸–ç•Œå¤§é—¨
 //==========================================================
     g_VMXCPU.bVTStartSuccess = FALSE;
 
-    Log("ERROR:VmLaunchÖ¸Áîµ÷ÓÃÊ§°Ü!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", Vmx_VmRead(VM_INSTRUCTION_ERROR))
+    Log("ERROR:VmLaunchæŒ‡ä»¤è°ƒç”¨å¤±è´¥!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", Vmx_VmRead(VM_INSTRUCTION_ERROR))
     StopVirtualTechnology();
 }
 
@@ -282,10 +282,10 @@ NTSTATUS StartVirtualTechnology()
     status = AllocateVMXRegion();
     if (!NT_SUCCESS(status))
     {
-        Log("ERROR:VMXÄÚ´æÇøÓòÉêÇëÊ§°Ü",0);
+        Log("ERROR:VMXå†…å­˜åŒºåŸŸç”³è¯·å¤±è´¥",0);
         return STATUS_UNSUCCESSFUL;
     }
-    Log("SUCCESS:VMXÄÚ´æÇøÓòÉêÇë³É¹¦!",0);
+    Log("SUCCESS:VMXå†…å­˜åŒºåŸŸç”³è¯·æˆåŠŸ!",0);
 
     SetupVMXRegion();
     g_VMXCPU.bVTStartSuccess = TRUE;
@@ -294,11 +294,11 @@ NTSTATUS StartVirtualTechnology()
 
     if (g_VMXCPU.bVTStartSuccess)
     {
-        Log("SUCCESS:¿ªÆôVT³É¹¦!",0);
-        Log("SUCCESS:ÏÖÔÚÕâ¸öCPU½øÈëÁËVMXÄ£Ê½.",0);
+        Log("SUCCESS:å¼€å¯VTæˆåŠŸ!",0);
+        Log("SUCCESS:ç°åœ¨è¿™ä¸ªCPUè¿›å…¥äº†VMXæ¨¡å¼.",0);
         return STATUS_SUCCESS;
     }
-    else Log("ERROR:¿ªÆôVTÊ§°Ü!",0);
+    else Log("ERROR:å¼€å¯VTå¤±è´¥!",0);
     return STATUS_UNSUCCESSFUL;
 }
 
@@ -333,8 +333,8 @@ LLL:
 //__asm int 3
         MyEptFree();
 
-        Log("SUCCESS:¹Ø±ÕVT³É¹¦!",0);
-        Log("SUCCESS:ÏÖÔÚÕâ¸öCPUÍË³öÁËVMXÄ£Ê½.",0);
+        Log("SUCCESS:å…³é—­VTæˆåŠŸ!",0);
+        Log("SUCCESS:ç°åœ¨è¿™ä¸ªCPUé€€å‡ºäº†VMXæ¨¡å¼.",0);
     }
 
     return STATUS_SUCCESS;
@@ -353,7 +353,7 @@ BOOLEAN IsVTEnabled()
 
     if (uCPUID.VMX != 1)
     {
-        Log("ERROR: Õâ¸öCPU²»Ö§³ÖVT!",0);
+        Log("ERROR: è¿™ä¸ªCPUä¸æ”¯æŒVT!",0);
         return FALSE;
     }
 
@@ -363,14 +363,14 @@ BOOLEAN IsVTEnabled()
 
     if (uCr0.PE != 1 || uCr0.PG!=1 || uCr0.NE!=1)
     {
-        Log("ERROR:Õâ¸öCPUÃ»ÓĞ¿ªÆôVT!",0);
+        Log("ERROR:è¿™ä¸ªCPUæ²¡æœ‰å¼€å¯VT!",0);
         return FALSE;
     }
 
     if (uCr4.VMXE == 1)
     {
-        Log("ERROR:Õâ¸öCPUÒÑ¾­¿ªÆôÁËVT!",0);
-        Log("¿ÉÄÜÊÇ±ğµÄÇı¶¯ÒÑ¾­Õ¼ÓÃÁËVT£¬Äã±ØĞë¹Ø±ÕËüºó²ÅÄÜ¿ªÆô¡£",0);
+        Log("ERROR:è¿™ä¸ªCPUå·²ç»å¼€å¯äº†VT!",0);
+        Log("å¯èƒ½æ˜¯åˆ«çš„é©±åŠ¨å·²ç»å ç”¨äº†VTï¼Œä½ å¿…é¡»å…³é—­å®ƒåæ‰èƒ½å¼€å¯ã€‚",0);
         return FALSE;
     }
 
@@ -378,9 +378,10 @@ BOOLEAN IsVTEnabled()
     *((PULONG)&msr) = (ULONG)Asm_ReadMsr(MSR_IA32_FEATURE_CONTROL);
     if (msr.Lock!=1)
     {
-        Log("ERROR:VTÖ¸ÁîÎ´±»Ëø¶¨!",0);
+        Log("ERROR:VTæŒ‡ä»¤æœªè¢«é”å®š!",0);
         return FALSE;
     }
-    Log("SUCCESS:Õâ¸öCPUÖ§³ÖVT!",0);
+    Log("SUCCESS:è¿™ä¸ªCPUæ”¯æŒVT!",0);
     return TRUE;
 }
+ 

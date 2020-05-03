@@ -1,4 +1,4 @@
-#ifndef EXITHANDLER_H
+﻿#ifndef EXITHANDLER_H
 #define EXITHANDLER_H
 
 void HandleCPUID();
@@ -7,3 +7,4 @@ void HandleCrAccess();
 void VMMEntryPoint(void);
 
 #endif
+ 
