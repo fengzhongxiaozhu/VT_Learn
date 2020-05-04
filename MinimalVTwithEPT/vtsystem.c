@@ -247,15 +247,15 @@ void SetupVMCS()
 
 //for EPT with PAE
     //Table 24-4.  Format of Pending-Debug-Exceptions (Contd.) -> Page-directory-pointer-table entries
-    // 如果是PAE模式下,没有设置这个,会造成三重错误.
-    Vmx_VmWrite(GUEST_PDPTR0, MmGetPhysicalAddress((PVOID)0xc0600000).LowPart | 1);
-    Vmx_VmWrite(GUEST_PDPTR0_HIGH, MmGetPhysicalAddress((PVOID)0xc0600000).HighPart);
-    Vmx_VmWrite(GUEST_PDPTR1, MmGetPhysicalAddress((PVOID)0xc0601000).LowPart | 1);
-    Vmx_VmWrite(GUEST_PDPTR1_HIGH, MmGetPhysicalAddress((PVOID)0xc0601000).HighPart);
-    Vmx_VmWrite(GUEST_PDPTR2, MmGetPhysicalAddress((PVOID)0xc0602000).LowPart | 1);
-    Vmx_VmWrite(GUEST_PDPTR2_HIGH, MmGetPhysicalAddress((PVOID)0xc0602000).HighPart);
-    Vmx_VmWrite(GUEST_PDPTR3, MmGetPhysicalAddress((PVOID)0xc0603000).LowPart | 1);
-    Vmx_VmWrite(GUEST_PDPTR3_HIGH, MmGetPhysicalAddress((PVOID)0xc0603000).HighPart);
+    // 如果是PAE模式下,没有设置这个,会造成三重错误. // 因为cpu设计让 内存表 少走一级效率高.存进高速缓存了
+    Vmx_VmWrite(GUEST_PDPTR0, MmGetPhysicalAddress((PVOID)0xc0600000).LowPart | 1);    // 
+    Vmx_VmWrite(GUEST_PDPTR0_HIGH, MmGetPhysicalAddress((PVOID)0xc0600000).HighPart);  // 
+    Vmx_VmWrite(GUEST_PDPTR1, MmGetPhysicalAddress((PVOID)0xc0601000).LowPart | 1);    // 
+    Vmx_VmWrite(GUEST_PDPTR1_HIGH, MmGetPhysicalAddress((PVOID)0xc0601000).HighPart);  // 
+    Vmx_VmWrite(GUEST_PDPTR2, MmGetPhysicalAddress((PVOID)0xc0602000).LowPart | 1);    // 
+    Vmx_VmWrite(GUEST_PDPTR2_HIGH, MmGetPhysicalAddress((PVOID)0xc0602000).HighPart);  // 
+    Vmx_VmWrite(GUEST_PDPTR3, MmGetPhysicalAddress((PVOID)0xc0603000).LowPart | 1);    // 
+    Vmx_VmWrite(GUEST_PDPTR3_HIGH, MmGetPhysicalAddress((PVOID)0xc0603000).HighPart);  // 
 
     //
     // 4.VMEntry运行控制域

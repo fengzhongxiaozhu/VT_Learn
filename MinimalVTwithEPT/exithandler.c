@@ -57,6 +57,8 @@ void HandleCrAccess()
 
     if (movcrAccessType == 0) {         // CR3 <-- reg32
 //for PAE
+
+        // 0xc0600000 要对应当前进程的.切换了.那么必须替换到当前进程的
         g_GuestRegs.cr3 = *(PULONG)((ULONG)&g_GuestRegs + 4 * movcrGeneralPurposeRegister);
         __asm{
             mov eax, cr3
@@ -64,6 +66,7 @@ void HandleCrAccess()
             mov eax, g_GuestRegs.cr3
             mov cr3, eax
         }
+        // 进程CR3换了,那么下面的代码还执行吗?执行的..因为这是在0环..
         Vmx_VmWrite(GUEST_PDPTR0, MmGetPhysicalAddress((PVOID)0xc0600000).LowPart | 1);
         Vmx_VmWrite(GUEST_PDPTR0_HIGH, MmGetPhysicalAddress((PVOID)0xc0600000).HighPart);
         Vmx_VmWrite(GUEST_PDPTR1, MmGetPhysicalAddress((PVOID)0xc0601000).LowPart | 1);
