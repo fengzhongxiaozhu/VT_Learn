@@ -228,15 +228,26 @@ void SetupVMCS()
 
     //
     // 3.虚拟机运行控制域
-    //
+    //24.6 VM - EXECUTION CONTROL FIELDS
+
     Vmx_VmWrite(PIN_BASED_VM_EXEC_CONTROL, VmxAdjustControls(0, MSR_IA32_VMX_PINBASED_CTLS));
+
+
 //for EPT
+    //Table 24 - 6.  Definitions of Primary Processor - Based VM - Execution Controls(Contd.)Bit Position(s)    NameDescription
+    //Table 24 - 7.  Definitions of Secondary Processor - Based VM - Execution Controls  
+    // 在 chrome pdf 中直接搜 IA32_VMX_PROCBASED_CTLS . IA32_VMX_PROCBASED_CTLS2 直接搜
     Vmx_VmWrite(CPU_BASED_VM_EXEC_CONTROL, VmxAdjustControls(0x80000000, MSR_IA32_VMX_PROCBASED_CTLS));
+
+    //24.6.11    Extended - Page - Table Pointer(EPTP)
     Vmx_VmWrite(EPT_POINTER, (EPTP | 6 | (3 << 3)) & 0xFFFFFFFF);
     Vmx_VmWrite(EPT_POINTER_HIGH, (EPTP | 6 | (3 << 3)) >> 32);
     Vmx_VmWrite(EPT_POINTER_HIGH, EPTP >> 32);
     Vmx_VmWrite(SECONDARY_VM_EXEC_CONTROL, VmxAdjustControls(0x2, MSR_IA32_VMX_PROCBASED_CTLS2));
+
 //for EPT with PAE
+    //Table 24-4.  Format of Pending-Debug-Exceptions (Contd.) -> Page-directory-pointer-table entries
+    // 如果是PAE模式下,没有设置这个,会造成三重错误.
     Vmx_VmWrite(GUEST_PDPTR0, MmGetPhysicalAddress((PVOID)0xc0600000).LowPart | 1);
     Vmx_VmWrite(GUEST_PDPTR0_HIGH, MmGetPhysicalAddress((PVOID)0xc0600000).HighPart);
     Vmx_VmWrite(GUEST_PDPTR1, MmGetPhysicalAddress((PVOID)0xc0601000).LowPart | 1);
